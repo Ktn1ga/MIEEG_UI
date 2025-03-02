@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>MI-EEG解析平台</title>
+    <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -27,6 +28,10 @@
     </style>
 </head>
 <body>
+    <button class="theme-toggle" aria-label="切换主题">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <header>
         <h1>MI-EEG解析平台</h1>
         <p>基于运动想象脑电信号的智能解析与应用平台</p>
@@ -38,15 +43,35 @@
             <p>MI-EEG解析平台是一个专注于运动想象脑电信号处理和应用的综合性平台。我们提供先进的信号处理算法、实时解析功能和丰富的应用示例，帮助研究人员更好地理解和应用脑电信号。</p>
         </div>
 
-        <div class="section">
+        <div class="section features-section">
             <h2>主要功能</h2>
-            <ul>
-                <li>实时脑电信号采集与处理</li>
-                <li>多种信号处理算法支持</li>
-                <li>可视化数据分析工具</li>
-                <li>交互式应用开发接口</li>
-                <li>丰富的示例程序和文档</li>
-            </ul>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>实时脑电信号采集与处理</h3>
+                    <p>高精度的信号采集和实时处理能力，确保数据质量和分析效率。</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-code"></i>
+                    <h3>多种信号处理算法支持</h3>
+                    <p>集成多种先进的信号处理算法，满足不同研究需求。</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>可视化数据分析工具</h3>
+                    <p>直观的数据可视化界面，帮助深入理解脑电信号特征。</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-plug"></i>
+                    <h3>交互式应用开发接口</h3>
+                    <p>灵活的API接口，支持快速开发和集成自定义应用。</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-book"></i>
+                    <h3>丰富的示例程序和文档</h3>
+                    <p>完整的开发文档和示例代码，加速应用开发进程。</p>
+                </div>
+            </div>
         </div>
 
         <div class="section">
@@ -130,19 +155,37 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section algorithms-section">
             <h2>算法支持</h2>
-            <ul>
-                <li>CSP：经典的脑电信号空间滤波算法，适用于特征提取和分类任务。</li>
-                <li>EEGNet：轻量级深度学习模型，专为脑电信号分类设计。</li>
-                <li>FBCNet：多频段滤波的网络模型，适用于多频段脑电信号分析。</li>
-                <li>EEG Conformer：基于Transformer架构，擅长捕捉长时依赖关系。</li>
-                <li>FACT-Net：
-                    <a href="https://github.com/Ktn1ga/EEG_FACT" target="_blank" class="algorithm-link" rel="noopener noreferrer">
-                        <i class="fab fa-github"></i> 高效的脑电信号处理算法，专注于特征提取与分类任务。
-                        </a>
-                </li>
-            </ul>
+            <div class="algorithms-grid">
+                <div class="algorithm-card">
+                    <h3>CSP</h3>
+                    <p>经典的脑电信号空间滤波算法，适用于特征提取和分类任务。</p>
+                </div>
+                <div class="algorithm-card">
+                    <h3>EEGNet</h3>
+                    <p>轻量级深度学习模型，专为脑电信号分类设计。</p>
+                </div>
+                <div class="algorithm-card">
+                    <h3>FBCNet</h3>
+                    <p>多频段滤波的网络模型，适用于多频段脑电信号分析。</p>
+                </div>
+                <div class="algorithm-card">
+                    <h3>EEG Conformer</h3>
+                    <p>基于Transformer架构，擅长捕捉长时依赖关系。</p>
+                </div>
+                <div class="algorithm-card">
+                    <h3>FACT-Net</h3>
+                    <p>高效的脑电信号处理算法，专注于特征提取与分类任务。</p>
+                    <a href="https://github.com/Ktn1ga/EEG_FACT" target="_blank" class="github-link" rel="noopener noreferrer">
+                        <i class="fas fa-external-link-alt"></i> 查看源码
+                    </a>
+                </div>
+                <!-- <div class="algorithm-card coming-soon">
+                    <h3>更多模型</h3>
+                    <p>敬请期待。</p>
+                </div> -->
+            </div>
         </div>
         
     </div>
@@ -153,5 +196,29 @@
 
     <div id="toast" class="toast"></div>
     <script src="scripts/index.js"></script>
+    <script>
+        // 主题切换功能
+        const themeToggle = document.querySelector('.theme-toggle');
+        const root = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+
+        // 从本地存储中获取主题设置
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        root.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+    </script>
 </body>
 </html>

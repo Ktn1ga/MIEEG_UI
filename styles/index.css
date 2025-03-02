@@ -1,21 +1,21 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.6;
     padding-bottom: 60px;
-    background-color: #f5f7fa;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 header {
-    background: linear-gradient(135deg, #2c3e50, #3498db);
-    color: white;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 4rem 1rem;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 header h1 {
@@ -65,12 +65,12 @@ header p {
 }
 
 .section {
-    margin: 2rem 0;
-    padding: 2.5rem;
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-    transition: all 0.4s ease;
+    margin: 3rem 0;
+    padding: 3rem;
+    background-color: var(--bg-secondary);
+    border-radius: 30px;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
 }
 
 .section:hover {
@@ -78,13 +78,224 @@ header p {
     box-shadow: 0 12px 35px rgba(0,0,0,0.1);
 }
 
+/* 主要功能部分样式 */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.feature-card {
+    background: var(--feature-card-bg);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.4s ease;
+}
+
+.feature-card h3 {
+    font-size: 0.95rem;
+    margin: 0.4rem 0;
+    color: var(--text-primary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-top: 0.3rem;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--border-color);
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover i {
+    transform: scale(1.1);
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin: 0.6rem 0;
+    color: var(--text-primary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
+/* 算法支持部分样式 */
+.algorithms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.algorithm-card {
+    background: var(--feature-card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.algorithm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.algorithm-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-color: var(--border-color);
+}
+
+.algorithm-card:hover::before {
+    transform: scaleX(1);
+}
+
+.algorithm-card h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.algorithm-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0.8rem 0;
+}
+
+.algorithm-card.coming-soon {
+    position: relative;
+    background: var(--feature-card-bg);
+    border: 1px solid var(--border-color);
+    overflow: visible;
+}
+
+.algorithm-card.coming-soon::after {
+    content: '即将推出';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+    z-index: 10;
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-primary);
+    text-decoration: none;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.github-link i {
+    margin-right: 0.5rem;
+}
+
+.github-link:hover {
+    color: var(--text-secondary);
+    transform: translateY(-2px);
+}
+
 .section h2 {
     position: relative;
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    letter-spacing: 0.8px;
-    color: #2c3e50;
+    letter-spacing: -0.003em;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .section h2::after {
@@ -118,7 +329,7 @@ header p {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: #3498db transparent;
+    scrollbar-color: var(--text-primary) transparent;
     mask-image: linear-gradient(to right, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
 }
@@ -131,13 +342,14 @@ header p {
     .scroll-hint {
         display: block;
         text-align: center;
-        color: #3498db;
+        color: var(--text-primary);
         margin-top: 1rem;
         font-size: 1rem;
         opacity: 0;
         transition: opacity 0.8s ease-in-out;
     }
 }
+
 .scroll-hint.show {
     opacity: 0.8;
     animation: pulse 2s infinite;
@@ -147,43 +359,6 @@ header p {
     margin-left: 0.5rem;
     animation: slideRight 1.5s infinite;
 }
-
-@keyframes pulse {
-    0% { opacity: 0.8; }
-    50% { opacity: 0.4; }
-    100% { opacity: 0.8; }
-}
-
-@keyframes slideRight {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(10px); }
-    100% { transform: translateX(0); }
-}
-
-.demo-container::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
-    position: absolute;
-    bottom: 0;
-}
-
-.demo-container::-webkit-scrollbar-track {
-    background: rgba(52, 152, 219, 0.1);
-    border-radius: 3px;
-    margin: 0 2rem;
-}
-
-.demo-container::-webkit-scrollbar-thumb {
-    background: #3498db;
-    border-radius: 3px;
-    transition: background 0.3s ease;
-}
-
-.demo-container::-webkit-scrollbar-thumb:hover {
-    background: #2980b9;
-}
-
-
 
 .demo-container::-webkit-scrollbar {
     height: 8px;
@@ -195,44 +370,26 @@ header p {
 }
 
 .demo-container::-webkit-scrollbar-thumb {
-    background: #3498db;
+    background: var(--text-primary);
     border-radius: 4px;
 }
 
 .demo-container::-webkit-scrollbar-thumb:hover {
-    background: #2980b9;
+    background: var(--text-secondary);
 }
 
 .demo-card {
-    scroll-snap-align: start;
-}
-
-@media (max-width: 1200px) {
-    .demo-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .demo-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 0;
-    }
-}
-
-.demo-card {
-    background: white;
-    border: none;
-    border-radius: 16px;
-    padding: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2.5rem;
     text-align: center;
-    transition: all 0.4s ease;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    min-width: 280px;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 300px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(20px);
 }
 
 .demo-card.expanded {
@@ -249,18 +406,18 @@ header p {
     margin-top: 1.5rem;
     text-align: left;
     padding: 0 1rem;
-    border-top: 1px solid rgba(52, 152, 219, 0.2);
+    border-top: 1px solid var(--border-color);
 }
 
 .demo-card .detail-content h4 {
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 1.2rem;
     margin: 1.2rem 0 0.8rem;
     letter-spacing: 0.5px;
 }
 
 .demo-card .detail-content p {
-    color: #555;
+    color: var(--text-secondary);
     line-height: 1.8;
     margin: 0.8rem 0;
     font-size: 1rem;
@@ -272,7 +429,7 @@ header p {
 }
 
 .demo-card .detail-content li {
-    color: #555;
+    color: var(--text-secondary);
     margin: 0.5rem 0;
     line-height: 1.6;
 }
@@ -286,8 +443,7 @@ header p {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
-    color: #3498db;
-    transition: transform 0.4s ease;
+    color: var(--text-primary);
 }
 
 .demo-card.expanded .expand-icon {
@@ -320,15 +476,15 @@ header p {
 .button {
     display: inline-block;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
+    background: #0071e3;
+    color: #fff;
     text-decoration: none;
-    border-radius: 30px;
+    border-radius: 980px;
     margin-top: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    transition: all 0.4s ease;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button:hover {
@@ -338,15 +494,47 @@ header p {
 }
 
 footer {
-    background: linear-gradient(135deg, #2c3e50, #3498db);
-    color: white;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     text-align: center;
-    padding: 1rem;
+    padding: 0.6rem 0;
     position: fixed;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -2px 15px rgba(0,0,0,0.1);
+    border-top: 1px solid var(--border-color);
     z-index: 1000;
+    backdrop-filter: blur(20px);
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+footer p {
+    margin: 0;
+}
+
+.coming-soon {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-secondary) !important;
+    cursor: not-allowed;
+}
+
+.coming-soon::after {
+    content: '即将推出';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: rgba(52, 152, 219, 0.9);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+    z-index: 1;
 }
 
 @media (max-width: 768px) {
@@ -364,6 +552,31 @@ footer {
 
     .container {
         padding: 1.5rem;
+    }
+
+    .demo-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .demo-card p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .demo-card .detail-content h4 {
+        font-size: 1.1rem;
+    }
+
+    .demo-card .detail-content p,
+    .demo-card .detail-content li {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .demo-card.expanded .detail-content p,
+    .demo-card.expanded .detail-content li {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 
     .section {
