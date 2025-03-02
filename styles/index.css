@@ -338,7 +338,7 @@ header p {
     display: none;
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 700px) {
     .scroll-hint {
         display: block;
         text-align: center;
