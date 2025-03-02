@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>脑控赛车游戏</title>
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-time-display" style="display: none;">
+            难度：<span id="difficulty">简单</span>
+            得分：<span id="score">0</span>
+            时间：<span id="time">00:00</span>
+        </div>
+
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+        
+        <div id="gameMenu" class="game-menu">
+            <h1 class="game-title">太空飞船射击游戏🚀</h1>
+            <div class="button-group">
+                <h3 style="color: #4CAF50; margin: 0;">选择难度</h3>
+                <button onclick="startGame('easy')">简单模式</button>
+                <button onclick="startGame('normal')">普通模式</button>
+                <button onclick="startGame('hard')">困难模式</button>
+            </div>
+            <div class="instructions">
+                操作说明：<br>
+                ← 左方向键：向左移动<br>
+                → 右方向键：向右移动<br>
+                自动发射子弹击中障碍物得分
+            </div>
+        </div>
+
+        <div id="pauseMenu" class="game-menu" style="display: none;">
+            <h2 class="game-title">游戏暂停</h2>
+            <div class="button-group">
+                <button onclick="resumeGame()">继续游戏</button>
+                <button onclick="restartGame()">重新开始</button>
+                <button onclick="returnToHome()">返回主页</button>
+            </div>
+        </div>
+
+        <div id="gameOverMenu" class="game-menu" style="display: none;">
+            <h2 class="game-title">游戏结束</h2>
+            <div class="score-display">
+                <p>最终得分：<span id="finalScore">0</span></p>
+                <p>游戏时间：<span id="finalTime">00:00</span></p>
+            </div>
+            <div class="button-group">
+                <button onclick="restartGame()">重新开始</button>
+                <button onclick="returnToHome()">返回主页</button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/game.js"></script>
+</body>
+</html>

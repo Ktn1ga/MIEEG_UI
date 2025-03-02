@@ -1,0 +1,447 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding-bottom: 60px;
+    background-color: #f5f7fa;
+}
+
+header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 3rem;
+    margin: 0 0 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 1.2px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+header p {
+    font-size: 1.3rem;
+    margin: 0;
+    opacity: 0.95;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    animation: fadeInUp 0.8s ease-out;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.section {
+    margin: 2rem 0;
+    padding: 2.5rem;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    transition: all 0.4s ease;
+}
+
+.section:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+}
+
+.section h2 {
+    position: relative;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    letter-spacing: 0.8px;
+    color: #2c3e50;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 240px;
+    height: 3px;
+    background-color: #3498db;
+    transition: width 0.3s ease;
+}
+
+.section:hover h2::after {
+    width: 120px;
+}
+
+.section h3 {
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    color: #2c3e50;
+}
+
+.demo-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #3498db transparent;
+    mask-image: linear-gradient(to right, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+}
+
+.scroll-hint {
+    display: none;
+}
+
+@media (min-width: 1201px) {
+    .scroll-hint {
+        display: block;
+        text-align: center;
+        color: #3498db;
+        margin-top: 1rem;
+        font-size: 1rem;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+    }
+}
+.scroll-hint.show {
+    opacity: 0.8;
+    animation: pulse 2s infinite;
+}
+
+.scroll-hint i {
+    margin-left: 0.5rem;
+    animation: slideRight 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes slideRight {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+.demo-container::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+    position: absolute;
+    bottom: 0;
+}
+
+.demo-container::-webkit-scrollbar-track {
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 3px;
+    margin: 0 2rem;
+}
+
+.demo-container::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.demo-container::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+
+
+.demo-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.demo-container::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.demo-container::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 4px;
+}
+
+.demo-container::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+.demo-card {
+    scroll-snap-align: start;
+}
+
+@media (max-width: 1200px) {
+    .demo-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .demo-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+    }
+}
+
+.demo-card {
+    background: white;
+    border: none;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    min-width: 280px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.demo-card.expanded {
+    min-width: 600px;
+    grid-column: span 2;
+    z-index: 10;
+}
+
+.demo-card .detail-content {
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    margin-top: 1.5rem;
+    text-align: left;
+    padding: 0 1rem;
+    border-top: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.demo-card .detail-content h4 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    margin: 1.2rem 0 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.demo-card .detail-content p {
+    color: #555;
+    line-height: 1.8;
+    margin: 0.8rem 0;
+    font-size: 1rem;
+}
+
+.demo-card .detail-content ul {
+    padding-left: 1.2rem;
+    margin: 0.8rem 0;
+}
+
+.demo-card .detail-content li {
+    color: #555;
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.demo-card.expanded .detail-content {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.demo-card .expand-icon {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    color: #3498db;
+    transition: transform 0.4s ease;
+}
+
+.demo-card.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+.demo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+}
+
+.demo-card img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    opacity: 0.95;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    margin: 0 auto 1.5rem;
+    display: block;
+}
+
+.demo-card img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+}
+
+.button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+footer {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 2.5rem 1rem;
+    }
+
+    header h1 {
+        font-size: 2.4rem;
+    }
+
+    header p {
+        font-size: 1.1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    .section {
+        margin: 1.5rem 0;
+        padding: 2rem;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+    }
+
+    .demo-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+    }
+
+    .demo-card {
+        padding: 2rem;
+    }
+
+    .demo-card h3 {
+        font-size: 1.6rem;
+        margin: 1.5rem 0;
+    }
+
+    .demo-card p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin: 1rem 0;
+    }
+
+    .demo-card img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .button {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    .section {
+        padding: 1.5rem;
+    }
+
+    .demo-card {
+        padding: 1.5rem;
+    }
+
+    .demo-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .demo-card p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .demo-card img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .button {
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+    }
+}

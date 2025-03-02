@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MI-EEG解析平台</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MI-EEG解析平台</h1>
+        <p>基于运动想象脑电信号的智能解析与应用平台</p>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>平台简介</h2>
+            <p>MI-EEG解析平台是一个专注于运动想象脑电信号处理和应用的综合性平台。我们提供先进的信号处理算法、实时解析功能和丰富的应用示例，帮助研究人员更好地理解和应用脑电信号。</p>
+        </div>
+
+        <div class="section">
+            <h2>主要功能</h2>
+            <ul>
+                <li>实时脑电信号采集与处理</li>
+                <li>多种信号处理算法支持</li>
+                <li>可视化数据分析工具</li>
+                <li>交互式应用开发接口</li>
+                <li>丰富的示例程序和文档</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>演示案例</h2>
+            <div class="demo-container">
+
+                <div class="demo-card">
+                    <img src="images/demo/demo1.png" alt="赛车游戏演示">
+                    <h3>脑控赛车游戏</h3>
+                    <p>使用运动想象脑电信号控制赛车移动，收集能量获取分数。这是一个简单的演示示例，展示了如何将脑电信号应用于游戏控制。</p>
+                    <div class="detail-content">
+                        <h4>游戏特点：</h4>
+                        <ul>
+                            <li>实时脑电信号控制</li>
+                            <li>多种难度级别</li>
+                            <li>直观的视觉反馈</li>
+                            <li>实时分数统计</li>
+                        </ul>
+                        <p>通过这个游戏，您可以体验到如何将脑电信号转化为实际的控制指令。</p>
+                    </div>
+                    <a href="game.html" class="button">开始体验</a>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+
+                <div class="demo-card">
+                    <img src="images/demo/demo4.png" alt="脑电API解码">
+                    <h3>脑电解码API接入</h3>
+                    <p>了解如何接入脑电解码 API。开发者可以通过简单的接口调用，快速将脑电信号解码集成到自己的应用中，能极大地简化开发流程，节省开发时间和成本。</p>
+                    <div class="detail-content">
+                        <h4>API特点：</h4>
+                        <ul>
+                            <li>简单易用的接口</li>
+                            <li>实时数据处理能力</li>
+                            <li>完整的开发文档</li>
+                            <li>丰富的示例代码</li>
+                        </ul>
+                        <p>我们提供详细的API文档和示例代码，帮助开发者快速集成脑电信号解码功能到自己的应用中。</p>
+                    </div>
+                    <a href="https://p1bqw9t746a.feishu.cn/wiki/LPHbwybyJijMKdkxRR1cSoDbn1e?from=from_copylink" class="button" target="_blank" rel="noopener noreferrer">了解更多</a>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                
+                <div class="demo-card">
+                    <img src="images/demo/demo2.png" alt="信号分析演示">
+                    <h3>脑电信号可视化</h3> 
+                    <p>展示脑电信号的实时采集、处理和分析过程，包括信号滤波、特征提取等功能。通过对实时数据流的处理，帮助用户更好地理解脑电信号的处理流程。</p>
+                    <div class="detail-content">
+                        <h4>功能特点：</h4>
+                        <ul>
+                            <li>实时数据可视化</li>
+                            <li>多通道信号显示</li>
+                            <li>频谱分析工具</li>
+                            <li>特征提取展示</li>
+                        </ul>
+                        <p>通过直观的可视化界面，您可以实时观察脑电信号的变化，深入理解信号处理的每个环节。</p>
+                    </div>
+                    <a href="#" class="button coming-soon">查看详情</a>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+
+                <div class="demo-card">
+                    <img src="images/demo/demo3.png" alt="脑机接口演示">
+                    <h3>模型性能监控</h3>
+                    <p>实时监控后台模型的运行性能，包括数据处理速度、准确率和资源使用情况。通过详细的性能分析报告，帮助优化模型效率。</p>
+                    <div class="detail-content">
+                        <h4>监控指标：</h4>
+                        <ul>
+                            <li>实时准确率统计</li>
+                            <li>处理延迟分析</li>
+                            <li>资源占用监测</li>
+                            <li>性能优化建议</li>
+                        </ul>
+                        <p>通过全面的性能监控系统，您可以及时发现并解决模型运行中的潜在问题，确保系统稳定高效运行。</p>
+                    </div>
+                    <a href="#" class="button coming-soon">查看详情</a>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+            </div>
+            <div class="scroll-hint show">
+                向右滑动查看更多 <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>算法支持</h2>
+            <ul>
+                <li>CSP：经典的脑电信号空间滤波算法，适用于特征提取和分类任务。</li>
+                <li>EEGNet：轻量级深度学习模型，专为脑电信号分类设计。</li>
+                <li>FBCNet：多频段滤波的网络模型，适用于多频段脑电信号分析。</li>
+                <li>EEG Conformer：基于Transformer架构，擅长捕捉长时依赖关系。</li>
+                <li>FACT-Net：
+                    <a href="https://github.com/Ktn1ga/EEG_FACT" target="_blank" class="algorithm-link" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i> 高效的脑电信号处理算法，专注于特征提取与分类任务。
+                        </a>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+
+    <footer>
+        <p>© 2025 MI-EEG解析平台 | 联系我们：contact@mi-eeg.com</p>
+</footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="scripts/index.js"></script>
+</body>
+</html>
