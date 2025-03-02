@@ -34,7 +34,9 @@ const game = {
         active: false,
         direction: null,
         startTime: 0
-    }
+    },
+    lastBulletTime: 0,  // 添加子弹发射计时器
+    bulletInterval: 500  // 子弹发射间隔(毫秒)
 };
 
 // 难度设置
@@ -106,6 +108,16 @@ function startGame(difficulty) {
     game.obstacles = [];
     game.lastObstacleTime = Date.now();
     game.startTime = Date.now();
+    game.lastBulletTime = Date.now();  // 重置子弹发射计时器
+    
+    // 根据难度调整子弹发射间隔
+    if (difficulty === 'easy') {
+        game.bulletInterval = 500;  // 简单模式发射较慢
+    } else if (difficulty === 'normal') {
+        game.bulletInterval = 300;  // 普通模式适中
+    } else {
+        game.bulletInterval = 200;  // 困难模式发射较快
+    }
     
     // 在游戏开始时选择车辆图片
     const currentProb2 = car2Probability[difficulty];
@@ -369,11 +381,14 @@ function gameLoop() {
     drawObstacles();
     drawDirectionIndicator();
     
-    if (Math.random() < 0.05) {
+    // 均匀发射子弹，基于时间间隔
+    const currentTime = Date.now();
+    if (currentTime - game.lastBulletTime > game.bulletInterval) {
         game.bullets.push({
             x: game.car.x,
             y: game.car.y
         });
+        game.lastBulletTime = currentTime;
     }
     
     requestAnimationFrame(gameLoop);

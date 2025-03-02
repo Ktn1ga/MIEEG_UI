@@ -6,6 +6,12 @@
     --dark-text-secondary: #a1a1a6;
     --dark-border-color: rgba(255, 255, 255, 0.1);
     --dark-feature-card-bg: linear-gradient(145deg, #222, #1a1a1a);
+    --dark-button-bg: #2c3e50;
+    --dark-button-hover-bg: #34495e;
+    --dark-button-text: #f5f5f7;
+    --dark-game-button-bg: linear-gradient(145deg, #2c3e50, #34495e);
+    --dark-game-button-hover-bg: linear-gradient(145deg, #34495e, #2c3e50);
+    --dark-game-button-text: #f5f5f7;
     
     /* 亮色主题变量 */
     --light-bg-primary: #f5f5f7;
@@ -14,6 +20,12 @@
     --light-text-secondary: #424245;
     --light-border-color: rgba(0, 0, 0, 0.1);
     --light-feature-card-bg: linear-gradient(145deg, #ffffff, #f5f5f7);
+    --light-button-bg: #007AFF;
+    --light-button-hover-bg: #0056b3;
+    --light-button-text: #ffffff;
+    --light-game-button-bg: linear-gradient(145deg, #007AFF, #0056b3);
+    --light-game-button-hover-bg: linear-gradient(145deg, #0056b3, #007AFF);
+    --light-game-button-text: #ffffff;
     
     /* 默认使用暗色主题 */
     --bg-primary: var(--dark-bg-primary);
@@ -22,6 +34,16 @@
     --text-secondary: var(--dark-text-secondary);
     --border-color: var(--dark-border-color);
     --feature-card-bg: var(--dark-feature-card-bg);
+    --button-bg: var(--dark-button-bg);
+    --button-hover-bg: var(--dark-button-hover-bg);
+    --button-text: var(--dark-button-text);
+    --game-button-bg: var(--dark-game-button-bg);
+    --game-button-hover-bg: var(--dark-game-button-hover-bg);
+    --game-button-text: var(--dark-game-button-text);
+    --coming-soon-bg: rgba(255, 255, 255, 0.15);
+    --coming-soon-text: #f5f5f7;
+    --coming-soon-label-bg: rgba(52, 152, 219, 0.9);
+    --coming-soon-label-text: #ffffff;
 }
 
 /* 亮色主题类 */
@@ -32,6 +54,15 @@
     --text-secondary: var(--light-text-secondary);
     --border-color: var(--light-border-color);
     --feature-card-bg: var(--light-feature-card-bg);
+    --button-bg: var(--light-button-bg);
+    --button-hover-bg: var(--light-button-hover-bg);
+    --game-button-bg: var(--light-game-button-bg);
+    --game-button-hover-bg: var(--light-game-button-hover-bg);
+    --game-button-text: var(--light-game-button-text);
+    --coming-soon-bg: rgba(0, 0, 0, 0.1);
+    --coming-soon-text: #333333;
+    --coming-soon-label-bg: rgba(52, 152, 219, 0.9);
+    --coming-soon-label-text: #ffffff;
 }
 
 /* 主题切换按钮样式 */
@@ -105,4 +136,29 @@ body {
 
 * {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.coming-soon {
+    position: relative;
+    background: var(--coming-soon-bg) !important;
+    color: var(--coming-soon-text) !important;
+    cursor: not-allowed;
+}
+
+.coming-soon::after {
+    content: '即将推出';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--coming-soon-label-bg);
+    color: var(--coming-soon-label-text);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+    z-index: 1;
 }

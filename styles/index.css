@@ -310,13 +310,13 @@ header p {
 }
 
 .section:hover h2::after {
-    width: 120px;
+    width: 360px;
 }
 
 .section h3 {
     font-size: 1.4rem;
     margin: 1rem 0;
-    color: #2c3e50;
+    color: var(--text-primary);
 }
 
 .demo-container {
@@ -476,8 +476,8 @@ header p {
 .button {
     display: inline-block;
     padding: 1rem 2rem;
-    background: #0071e3;
-    color: #fff;
+    background: var(--button-bg);
+    color: var(--button-text);
     text-decoration: none;
     border-radius: 980px;
     margin-top: 1.5rem;
@@ -488,7 +488,7 @@ header p {
 }
 
 .button:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
+    background: var(--button-hover-bg);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
 }
@@ -514,8 +514,8 @@ footer p {
 
 .coming-soon {
     position: relative;
-    background: rgba(255, 255, 255, 0.1) !important;
-    color: var(--text-secondary) !important;
+    background: var(--coming-soon-bg) !important;
+    color: var(--coming-soon-text) !important;
     cursor: not-allowed;
 }
 
@@ -524,8 +524,8 @@ footer p {
     position: absolute;
     top: -10px;
     right: -10px;
-    background: rgba(52, 152, 219, 0.9);
-    color: #fff;
+    background: var(--coming-soon-label-bg);
+    color: var(--coming-soon-label-text);
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
