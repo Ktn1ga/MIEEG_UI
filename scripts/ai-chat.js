@@ -1,3 +1,26 @@
+import { AI_ASSISTANT_CONFIG } from './config/ai-assistant.js';
+import OpenAI from './openai.js';
+
+const openai = new OpenAI({
+    apiKey: AI_ASSISTANT_CONFIG.apiKey,
+    baseURL: AI_ASSISTANT_CONFIG.baseURL
+});
+
+const messages = [
+    { role: 'system', content: AI_ASSISTANT_CONFIG.systemPrompt }
+];
+
+const AI_CHAT_CONFIG = {
+    systemPrompt: `你是这个网站的专业助手，熟悉网站的所有功能和脑机接口技术。本平台主要功能包括：
+1. 实时脑电信号采集与处理：提供高精度的信号采集和实时处理能力
+2. 多种信号处理算法支持：集成多种先进的信号处理算法
+3. 可视化数据分析工具：提供直观的数据可视化界面
+4. 交互式应用开发接口：支持快速开发和集成自定义应用
+5. 脑控赛车游戏演示：支持简单/普通/困难三种难度模式，通过脑电信号控制赛车移动收集能量得分
+
+你可以帮助用户了解这些具体功能、解答脑机接口相关问题，但对于超出这些范围的问题，你会礼貌地表示这不是你的专业领域。请用简洁友好的方式交流，避免过于机械化的回答。`
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const aiChatWidget = document.querySelector('.ai-chat-widget');
     const chatToggle = aiChatWidget.querySelector('.ai-chat-toggle');
@@ -18,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 发送消息
-    function sendMessage() {
+    async function sendMessage() {
         const message = chatInput.value.trim();
         if (!message) return;
 
@@ -27,13 +50,38 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.value = '';
         chatInput.style.height = 'auto';
 
-        // TODO: 发送消息到后端API
-        // 这里添加与后端API的通信逻辑
-        
-        // 模拟AI回复
-        setTimeout(() => {
-            addMessage('我是AI助手，目前是一个演示版本。后续会接入真实的AI对话功能。', 'bot');
-        }, 1000);
+        // 禁用输入和发送按钮
+        chatInput.disabled = true;
+        chatSend.disabled = true;
+
+        try {
+            // 添加用户消息到消息历史
+            messages.push({ role: 'user', content: message });
+
+            // 调用API获取回复
+            const response = await openai.chat.completions.create({
+                model: 'deepseek-chat',
+                messages: messages,
+                stream: false
+            });
+
+            // 获取AI回复
+            const aiMessage = response.choices[0].message.content;
+            
+            // 添加AI回复到消息历史
+            messages.push({ role: 'assistant', content: aiMessage });
+            
+            // 显示AI回复
+            addMessage(aiMessage, 'bot');
+        } catch (error) {
+            console.error('AI回复出错:', error);
+            addMessage('抱歉，我现在无法回答。请稍后再试。', 'bot');
+        } finally {
+            // 重新启用输入和发送按钮
+            chatInput.disabled = false;
+            chatSend.disabled = false;
+            chatInput.focus();
+        }
     }
 
     // 添加消息到聊天界面
