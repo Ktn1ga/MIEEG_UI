@@ -151,7 +151,22 @@
     }
 
     .ai-chat-toggle {
+        width: 64px;
+        height: 64px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 28px;
+    }
+
+    .ai-chat-toggle:hover {
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 320px) {
+    .ai-chat-toggle {
         width: 56px;
         height: 56px;
+        font-size: 24px;
     }
 }
