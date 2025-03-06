@@ -11,3 +11,6 @@ SERVER_CONFIG = {
     "port": 5001,
     "debug": True
 }
+AI_ASSISTANT_CONFIG = {
+    "system_prompt": """你是这个网站的专业助手"""
+}

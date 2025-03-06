@@ -4,7 +4,7 @@ import os
 import json
 import datetime
 from openai import OpenAI
-from config.config import API_CONFIG, AI_ASSISTANT_CONFIG
+from config.config import API_CONFIG, AI_ASSISTANT_CONFIG, SERVER_CONFIG
 
 app = Flask(__name__)
 CORS(app)
@@ -36,7 +36,6 @@ def index():
 @app.route('/<path:path>')
 def serve_file(path):
     return send_from_directory(static_dir, path)
-
 @app.route('/api/chat', methods=['POST'])
 def chat():
     try:
@@ -50,7 +49,7 @@ def chat():
         })
         
         response = client.chat.completions.create(
-            model="deepseek-chat",
+            model=API_CONFIG["model"],
             messages=messages,
             stream=True
         )
@@ -67,10 +66,13 @@ def chat():
         
         return Response(generate(), mimetype='text/event-stream')
     except Exception as e:
+        error_message = str(e)
+        # 记录错误信息到日志
+        log_chat(messages[-1]['content'], f"Error: {error_message}")
         return jsonify({
             'success': False,
-            'error': str(e)
+            'error': error_message
         }), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host=SERVER_CONFIG["host"], port=SERVER_CONFIG["port"], debug=SERVER_CONFIG["debug"])

@@ -51,6 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ messages })
             });
 
+            // 检查响应状态
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || '请求失败');
+            }
+
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
             let aiMessage = '';
@@ -70,7 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         try {
                             const jsonData = JSON.parse(line.slice(6));
                             if (!jsonData.success) {
-                                throw new Error(jsonData.error || '请求失败');
+                                const errorMessage = jsonData.error || '请求失败';
+                                messageDiv.innerHTML = renderMarkdown(`❌ ${errorMessage}`);
+                                throw new Error(errorMessage);
                             }
                             const newText = jsonData.message;
                             aiMessage += newText;
@@ -78,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             chatMessages.scrollTop = chatMessages.scrollHeight;
                         } catch (e) {
                             console.error('解析响应数据出错:', e);
+                            messageDiv.innerHTML = renderMarkdown(`❌ ${e.message}`)
                         }
                     }
                 }
             }
-
             // 添加AI回复到消息历史
             messages.push({ role: 'assistant', content: aiMessage });
         } catch (error) {
