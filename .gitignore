@@ -1,2 +1,6 @@
 logs/*
 !logs/.gitkeep
+
+# 忽略配置文件，但保留示例配置
+config/config.py
+!config/config.example.py

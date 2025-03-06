@@ -1,6 +1,6 @@
 # API配置
 API_CONFIG = {
-    "key": "sk-74410c4e1c15464a9ed8360ffdc1287e",
+    "key": "test",
     "base_url": "https://api.deepseek.com",
     "model": "deepseek-chat"
 }
