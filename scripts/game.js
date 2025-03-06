@@ -394,7 +394,83 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// 修改键盘控制，添加空格键暂停
+// 创建WebSocket连接
+const gameSocket = new WebSocket('ws://127.0.0.1:8766');
+
+// 添加键盘操作检测相关变量
+let lastKeyPressTime = Date.now();
+let lastClassificationResult = null;
+
+gameSocket.onopen = () => {
+    console.log('Connected to game server');
+};
+
+gameSocket.onerror = (error) => {
+    console.error('WebSocket error:', error);
+};
+
+// 添加移动冷却时间变量
+let lastMoveTime = Date.now();
+
+gameSocket.onmessage = (event) => {
+    try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'classification' && data.result !== undefined) {
+            const currentTime = Date.now();
+            // 检查是否满足最小移动间隔
+            if (currentTime - lastMoveTime >= 2000) {
+                if (data.result === 0) { // 修改为0，对应左移
+                    if (game.car.currentLane > 0) {
+                        game.car.currentLane--;
+                        game.car.x = config.lanes[game.car.currentLane];
+                        game.directionIndicator.active = true;
+                        game.directionIndicator.direction = 'left';
+                        game.directionIndicator.startTime = Date.now();
+                        lastMoveTime = currentTime; // 更新最后移动时间
+                    }
+                } else if (data.result === 1) { // 修改为1，对应右移
+                    if (game.car.currentLane < 2) {
+                        game.car.currentLane++;
+                        game.car.x = config.lanes[game.car.currentLane];
+                        game.directionIndicator.active = true;
+                        game.directionIndicator.direction = 'right';
+                        game.directionIndicator.startTime = Date.now();
+                        lastMoveTime = currentTime; // 更新最后移动时间
+                    }
+                }
+                lastClassificationResult = null; // 立即重置分类结果
+            }
+        }
+    } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+    }
+};
+
+// 添加定时器检查键盘操作
+setInterval(() => {
+    if (!game.isRunning || game.isPaused) return;
+    
+    const currentTime = Date.now();
+    if (currentTime - lastKeyPressTime > 1000 && lastClassificationResult !== null) {
+        // 根据分类结果移动小车
+        if (lastClassificationResult === 1 && game.car.currentLane > 0) {
+            game.car.currentLane--;
+            game.car.x = config.lanes[game.car.currentLane];
+            game.directionIndicator.active = true;
+            game.directionIndicator.direction = 'left';
+            game.directionIndicator.startTime = Date.now();
+        } else if (lastClassificationResult === 2 && game.car.currentLane < 2) {
+            game.car.currentLane++;
+            game.car.x = config.lanes[game.car.currentLane];
+            game.directionIndicator.active = true;
+            game.directionIndicator.direction = 'right';
+            game.directionIndicator.startTime = Date.now();
+        }
+        lastClassificationResult = null; // 重置分类结果
+    }
+}, 100); // 每100ms检查一次
+
+// 修改键盘控制
 document.addEventListener('keydown', (e) => {
     if (!game.isRunning) return;
     
@@ -410,19 +486,35 @@ document.addEventListener('keydown', (e) => {
     
     if (game.isPaused) return;
     
-    if (e.key === 'ArrowLeft' && game.car.currentLane > 0) {
-        game.car.currentLane--;
-        game.car.x = config.lanes[game.car.currentLane];
-        game.directionIndicator.active = true;
-        game.directionIndicator.direction = 'left';
-        game.directionIndicator.startTime = Date.now();
-    }
-    if (e.key === 'ArrowRight' && game.car.currentLane < 2) {
-        game.car.currentLane++;
-        game.car.x = config.lanes[game.car.currentLane];
-        game.directionIndicator.active = true;
-        game.directionIndicator.direction = 'right';
-        game.directionIndicator.startTime = Date.now();
+    const currentTime = Date.now();
+    // 检查是否满足最小移动间隔
+    if (currentTime - lastMoveTime >= 500) {
+        if (e.key === 'ArrowLeft' && game.car.currentLane > 0) {
+            game.car.currentLane--;
+            game.car.x = config.lanes[game.car.currentLane];
+            game.directionIndicator.active = true;
+            game.directionIndicator.direction = 'left';
+            game.directionIndicator.startTime = Date.now();
+            lastMoveTime = currentTime; // 更新最后移动时间
+            // 发送左移事件到服务器
+            gameSocket.send(JSON.stringify({
+                type: 'keypress',
+                direction: 'left'
+            }));
+        }
+        if (e.key === 'ArrowRight' && game.car.currentLane < 2) {
+            game.car.currentLane++;
+            game.car.x = config.lanes[game.car.currentLane];
+            game.directionIndicator.active = true;
+            game.directionIndicator.direction = 'right';
+            game.directionIndicator.startTime = Date.now();
+            lastMoveTime = currentTime; // 更新最后移动时间
+            // 发送右移事件到服务器
+            gameSocket.send(JSON.stringify({
+                type: 'keypress',
+                direction: 'right'
+            }));
+        }
     }
 });
 // 添加触摸控制

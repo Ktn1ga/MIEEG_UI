@@ -5,6 +5,10 @@
     --dark-text-primary: #f5f5f7;
     --dark-text-secondary: #a1a1a6;
     --dark-border-color: rgba(255, 255, 255, 0.1);
+    --dark-ai-chat-bg: rgba(29, 29, 31, 0.95);
+    --dark-ai-chat-input-bg: rgba(44, 44, 46, 0.8);
+    --dark-ai-chat-message-user-bg: #2c3e50;
+    --dark-ai-chat-message-bot-bg: #34495e;
     --dark-feature-card-bg: linear-gradient(145deg, #222, #1a1a1a);
     --dark-button-bg: #2c3e50;
     --dark-button-hover-bg: #34495e;
@@ -19,6 +23,10 @@
     --light-text-primary: #1d1d1f;
     --light-text-secondary: #424245;
     --light-border-color: rgba(0, 0, 0, 0.1);
+    --light-ai-chat-bg: rgba(255, 255, 255, 0.95);
+    --light-ai-chat-input-bg: rgba(245, 245, 247, 0.8);
+    --light-ai-chat-message-user-bg: #007AFF;
+    --light-ai-chat-message-bot-bg: #E5E5EA;
     --light-feature-card-bg: linear-gradient(145deg, #ffffff, #f5f5f7);
     --light-button-bg: #007AFF;
     --light-button-hover-bg: #0056b3;
@@ -44,6 +52,10 @@
     --coming-soon-text: #f5f5f7;
     --coming-soon-label-bg: rgba(52, 152, 219, 0.9);
     --coming-soon-label-text: #ffffff;
+    --ai-chat-bg: var(--dark-ai-chat-bg);
+    --ai-chat-input-bg: var(--dark-ai-chat-input-bg);
+    --ai-chat-message-user-bg: var(--dark-ai-chat-message-user-bg);
+    --ai-chat-message-bot-bg: var(--dark-ai-chat-message-bot-bg);
 }
 
 /* 亮色主题类 */
@@ -63,6 +75,10 @@
     --coming-soon-text: #333333;
     --coming-soon-label-bg: rgba(52, 152, 219, 0.9);
     --coming-soon-label-text: #ffffff;
+    --ai-chat-bg: var(--light-ai-chat-bg);
+    --ai-chat-input-bg: var(--light-ai-chat-input-bg);
+    --ai-chat-message-user-bg: var(--light-ai-chat-message-user-bg);
+    --ai-chat-message-bot-bg: var(--light-ai-chat-message-bot-bg);
 }
 
 /* 主题切换按钮样式 */
@@ -135,7 +151,7 @@ body {
 }
 
 * {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
 }
 
 .coming-soon {

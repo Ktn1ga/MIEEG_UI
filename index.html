@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/ai-chat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .toast {
@@ -212,7 +213,31 @@
 </footer>
 
     <div id="toast" class="toast"></div>
+
+    <!-- AI助手聊天界面 -->
+    <div class="ai-chat-widget">
+        <button class="ai-chat-toggle" aria-label="打开AI助手">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="ai-chat-container">
+            <div class="ai-chat-header">
+                <span>AI助手</span>
+                <button class="ai-chat-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="ai-chat-messages"></div>
+            <div class="ai-chat-input-container">
+                <textarea class="ai-chat-input" placeholder="输入您的问题..." rows="1"></textarea>
+                <button class="ai-chat-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="scripts/index.js"></script>
+    <script src="scripts/ai-chat.js"></script>
     <script>
         // 主题切换功能
         const themeToggle = document.querySelector('.theme-toggle');
