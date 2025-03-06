@@ -1,25 +1,9 @@
-import { AI_ASSISTANT_CONFIG } from './config/ai-assistant.js';
-import OpenAI from './openai.js';
+const messages = [];
 
-const openai = new OpenAI({
-    apiKey: AI_ASSISTANT_CONFIG.apiKey,
-    baseURL: AI_ASSISTANT_CONFIG.baseURL
-});
-
-const messages = [
-    { role: 'system', content: AI_ASSISTANT_CONFIG.systemPrompt }
-];
-
-const AI_CHAT_CONFIG = {
-    systemPrompt: `你是这个网站的专业助手，熟悉网站的所有功能和脑机接口技术。本平台主要功能包括：
-1. 实时脑电信号采集与处理：提供高精度的信号采集和实时处理能力
-2. 多种信号处理算法支持：集成多种先进的信号处理算法
-3. 可视化数据分析工具：提供直观的数据可视化界面
-4. 交互式应用开发接口：支持快速开发和集成自定义应用
-5. 脑控赛车游戏演示：支持简单/普通/困难三种难度模式，通过脑电信号控制赛车移动收集能量得分
-
-你可以帮助用户了解这些具体功能、解答脑机接口相关问题，但对于超出这些范围的问题，你会礼貌地表示这不是你的专业领域。请用简洁友好的方式交流，避免过于机械化的回答。`
-};
+// 引入Markdown渲染器
+const markdownRendererScript = document.createElement('script');
+markdownRendererScript.src = './scripts/markdown-renderer.js';
+document.head.appendChild(markdownRendererScript);
 
 document.addEventListener('DOMContentLoaded', () => {
     const aiChatWidget = document.querySelector('.ai-chat-widget');
@@ -58,21 +42,49 @@ document.addEventListener('DOMContentLoaded', () => {
             // 添加用户消息到消息历史
             messages.push({ role: 'user', content: message });
 
-            // 调用API获取回复
-            const response = await openai.chat.completions.create({
-                model: 'deepseek-chat',
-                messages: messages,
-                stream: false
+            // 调用后端API获取流式回复
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ messages })
             });
 
-            // 获取AI回复
-            const aiMessage = response.choices[0].message.content;
-            
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let aiMessage = '';
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('ai-chat-message', 'bot');
+            chatMessages.appendChild(messageDiv);
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value);
+                // 处理SSE格式数据
+                const lines = chunk.split('\n');
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        try {
+                            const jsonData = JSON.parse(line.slice(6));
+                            if (!jsonData.success) {
+                                throw new Error(jsonData.error || '请求失败');
+                            }
+                            const newText = jsonData.message;
+                            aiMessage += newText;
+                            messageDiv.innerHTML = renderMarkdown(aiMessage);
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        } catch (e) {
+                            console.error('解析响应数据出错:', e);
+                        }
+                    }
+                }
+            }
+
             // 添加AI回复到消息历史
             messages.push({ role: 'assistant', content: aiMessage });
-            
-            // 显示AI回复
-            addMessage(aiMessage, 'bot');
         } catch (error) {
             console.error('AI回复出错:', error);
             addMessage('抱歉，我现在无法回答。请稍后再试。', 'bot');
@@ -88,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addMessage(text, type) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('ai-chat-message', type);
-        messageDiv.textContent = text;
+        messageDiv.innerHTML = type === 'bot' ? renderMarkdown(text) : text;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
