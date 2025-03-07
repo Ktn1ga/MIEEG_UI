@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- 0-10分：中指表情（最低分） -->
+  <symbol id="emotion-0" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#FF4040" />
+    <!-- 眼睛 - 愤怒的眉毛 -->
+    <path d="M25 35 L40 40" stroke="#FFF" stroke-width="3" />
+    <path d="M75 35 L60 40" stroke="#FFF" stroke-width="3" />
+    <circle cx="35" cy="45" r="5" fill="#FFF" />
+    <circle cx="65" cy="45" r="5" fill="#FFF" />
+    <!-- 生气的嘴 -->
+    <path d="M30 70 Q50 60 70 70" stroke="#FFF" stroke-width="5" fill="none" />
+    <!-- 中指 -->
+    <g transform="translate(50, 25) scale(0.5) rotate(180)">
+      <rect x="-10" y="-5" width="20" height="30" rx="5" fill="#FFF" />
+      <rect x="-10" y="15" width="20" height="15" rx="3" fill="#FFF" />
+      <rect x="-25" y="15" width="15" height="10" rx="3" fill="#FFF" />
+      <rect x="10" y="15" width="15" height="10" rx="3" fill="#FFF" />
+      <rect x="-25" y="5" width="10" height="10" rx="3" fill="#FFF" />
+      <rect x="15" y="5" width="10" height="10" rx="3" fill="#FFF" />
+      <rect x="0" y="-20" width="8" height="25" rx="2" fill="#FFF" />
+    </g>
+  </symbol>
+  
+  <!-- 10-20分：非常不满意 -->
+  <symbol id="emotion-10" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#FF6B6B" />
+    <!-- 眼睛 - 皱眉 -->
+    <path d="M30 35 L40 40" stroke="#FFF" stroke-width="3" />
+    <path d="M70 35 L60 40" stroke="#FFF" stroke-width="3" />
+    <circle cx="35" cy="45" r="5" fill="#FFF" />
+    <circle cx="65" cy="45" r="5" fill="#FFF" />
+    <!-- 不满意的嘴 -->
+    <path d="M30 75 Q50 60 70 75" stroke="#FFF" stroke-width="5" fill="none" />
+    <!-- 汗滴 -->
+    <circle cx="80" cy="35" r="3" fill="#FFF" />
+  </symbol>
+  
+  <!-- 20-30分：不满意 -->
+  <symbol id="emotion-20" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#FF9E7D" />
+    <!-- 眼睛 - 微皱眉 -->
+    <path d="M32 38 L40 40" stroke="#FFF" stroke-width="2.5" />
+    <path d="M68 38 L60 40" stroke="#FFF" stroke-width="2.5" />
+    <circle cx="35" cy="45" r="5" fill="#FFF" />
+    <circle cx="65" cy="45" r="5" fill="#FFF" />
+    <!-- 不满意的嘴 -->
+    <path d="M30 70 Q50 60 70 70" stroke="#FFF" stroke-width="5" fill="none" />
+  </symbol>
+  
+  <!-- 30-40分：略不满意 -->
+  <symbol id="emotion-30" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#FFBD69" />
+    <!-- 眼睛 -->
+    <circle cx="35" cy="40" r="6" fill="#FFF" />
+    <circle cx="65" cy="40" r="6" fill="#FFF" />
+    <circle cx="35" cy="40" r="2" fill="#FFBD69" />
+    <circle cx="65" cy="40" r="2" fill="#FFBD69" />
+    <!-- 略不满意的嘴 -->
+    <path d="M30 65 Q50 60 70 65" stroke="#FFF" stroke-width="5" fill="none" />
+  </symbol>
+  
+  <!-- 40-50分：中性偏消极 -->
+  <symbol id="emotion-40" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#FFD166" />
+    <!-- 眼睛 -->
+    <circle cx="35" cy="40" r="6" fill="#FFF" />
+    <circle cx="65" cy="40" r="6" fill="#FFF" />
+    <circle cx="35" cy="40" r="2" fill="#FFD166" />
+    <circle cx="65" cy="40" r="2" fill="#FFD166" />
+    <!-- 中性的嘴 -->
+    <line x1="30" y1="65" x2="70" y2="65" stroke="#FFF" stroke-width="5" />
+  </symbol>
+  
+  <!-- 50-60分：中性 -->
+  <symbol id="emotion-50" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#F9F871" />
+    <!-- 眼睛 -->
+    <circle cx="35" cy="40" r="6" fill="#FFF" />
+    <circle cx="65" cy="40" r="6" fill="#FFF" />
+    <circle cx="35" cy="40" r="2" fill="#F9F871" />
+    <circle cx="65" cy="40" r="2" fill="#F9F871" />
+    <!-- 中性的嘴 -->
+    <line x1="30" y1="65" x2="70" y2="65" stroke="#FFF" stroke-width="5" />
+  </symbol>
+  
+  <!-- 60-70分：有点满意 -->
+  <symbol id="emotion-60" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#B8F7D4" />
+    <!-- 眼睛 -->
+    <circle cx="35" cy="40" r="6" fill="#FFF" />
+    <circle cx="65" cy="40" r="6" fill="#FFF" />
+    <circle cx="35" cy="40" r="2" fill="#B8F7D4" />
+    <circle cx="65" cy="40" r="2" fill="#B8F7D4" />
+    <!-- 微笑的嘴 -->
+    <path d="M30 65 Q50 70 70 65" stroke="#FFF" stroke-width="5" fill="none" />
+  </symbol>
+  
+  <!-- 70-80分：满意 -->
+  <symbol id="emotion-70" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#95E1D3" />
+    <!-- 眼睛 - 眯眼笑 -->
+    <path d="M30 40 Q35 35 40 40" stroke="#FFF" stroke-width="3" fill="none" />
+    <path d="M60 40 Q65 35 70 40" stroke="#FFF" stroke-width="3" fill="none" />
+    <!-- 笑的嘴 -->
+    <path d="M30 65 Q50 75 70 65" stroke="#FFF" stroke-width="5" fill="none" />
+  </symbol>
+  
+  <!-- 80-90分：很满意 -->
+  <symbol id="emotion-80" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#81DEEA" />
+    <!-- 眼睛 - 眯眼笑 -->
+    <path d="M25 40 Q35 30 45 40" stroke="#FFF" stroke-width="3" fill="none" />
+    <path d="M55 40 Q65 30 75 40" stroke="#FFF" stroke-width="3" fill="none" />
+    <!-- 大笑的嘴 -->
+    <path d="M25 65 Q50 85 75 65" stroke="#FFF" stroke-width="5" fill="none" />
+    <!-- 腮红 -->
+    <circle cx="30" cy="55" r="5" fill="#FF9E7D" opacity="0.6" />
+    <circle cx="70" cy="55" r="5" fill="#FF9E7D" opacity="0.6" />
+  </symbol>
+  
+  <!-- 90-100分：非常满意（彩蛋表情） -->
+  <symbol id="emotion-90" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="#86A8E7" />
+    <!-- 星星眼 -->
+    <path d="M35 40 L38 35 L41 40 L36 37.5 L40 37.5 Z" fill="#FFD700" />
+    <path d="M65 40 L68 35 L71 40 L66 37.5 L70 37.5 Z" fill="#FFD700" />
+    <!-- 大笑的嘴 -->
+    <path d="M25 65 Q50 90 75 65" stroke="#FFF" stroke-width="5" fill="none" />
+    <!-- 彩虹光环 -->
+    <circle cx="50" cy="50" r="48" stroke="#FF0000" stroke-width="2" fill="none" />
+    <circle cx="50" cy="50" r="51" stroke="#FF7F00" stroke-width="2" fill="none" />
+    <circle cx="50" cy="50" r="54" stroke="#FFFF00" stroke-width="2" fill="none" />
+    <circle cx="50" cy="50" r="57" stroke="#00FF00" stroke-width="2" fill="none" />
+    <circle cx="50" cy="50" r="60" stroke="#0000FF" stroke-width="2" fill="none" />
+    <circle cx="50" cy="50" r="63" stroke="#4B0082" stroke-width="2" fill="none" />
+    <circle cx="50" cy="50" r="66" stroke="#9400D3" stroke-width="2" fill="none" />
+    <!-- 小皇冠 -->
+    <path d="M35 25 L45 30 L50 20 L55 30 L65 25 L60 35 L40 35 Z" fill="#FFD700" />
+  </symbol>
+</svg> 
