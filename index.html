@@ -27,6 +27,20 @@
         .toast.show {
             opacity: 1;
         }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .admin-button {
+            background-color: #6c757d !important;
+        }
+
+        .admin-button:hover {
+            background-color: #5a6268 !important;
+        }
     </style>
 </head>
 <body>
@@ -148,7 +162,10 @@
                         </ul>
                         <p>通过全面的性能监控系统，您可以及时发现并解决模型运行中的潜在问题，确保系统稳定高效运行。</p>
                     </div>
-                    <a href="#" class="button coming-soon">查看详情</a>
+                    <div class="button-group">
+                        <a href="#" class="button coming-soon">查看详情</a>
+                        <a href="/admin" class="button admin-button">管理员入口</a>
+                    </div>
                     <i class="fas fa-chevron-down expand-icon"></i>
                 </div>
             </div>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志查看</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .back-button {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            color: #007bff;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .date-selector {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .ip-selector {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 150px;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .filter-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .logout-btn {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        .log-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            height: 600px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 3px solid #007bff;
+            background: white;
+        }
+        .log-entry.user-message {
+            border-left-color: #28a745;
+        }
+        .log-entry.assistant-message {
+            border-left-color: #007bff;
+            margin-left: 20px;
+        }
+        .log-entry.admin-action {
+            border-left-color: #6f42c1;
+        }
+        .log-entry.conversation {
+            border-left-color: #fd7e14;
+            background: #fff9f0;
+        }
+        .log-entry.error {
+            border-left-color: #dc3545;
+            background: #fff0f0;
+        }
+        .log-pair {
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .ip-address {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        .operation {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .status-success {
+            color: #28a745;
+        }
+        .status-fail {
+            color: #dc3545;
+        }
+        .user-message {
+            color: #28a745;
+        }
+        .assistant-message {
+            color: #007bff;
+        }
+        .admin-action {
+            color: #6f42c1;
+        }
+        .filter-controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+        }
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .filter-checkbox input {
+            margin: 0;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .test-btn {
+            padding: 8px 16px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .test-btn:hover {
+            background-color: #138496;
+        }
+        .refresh-btn {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .refresh-btn:hover {
+            background-color: #218838;
+        }
+        .clear-btn {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <a href="/" class="back-button" title="返回首页"><i class="fas fa-home"></i> 首页</a>
+                <h2>系统日志查看</h2>
+            </div>
+            <div class="header-right">
+                <div class="filter-group">
+                    <span class="filter-label">日期:</span>
+                    <input type="date" class="date-selector" id="dateSelector" onchange="loadLogs()">
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">IP地址:</span>
+                    <select class="ip-selector" id="ipSelector" onchange="loadLogs()">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <button class="logout-btn" onclick="logout()">退出登录</button>
+            </div>
+        </div>
+        
+        <div class="filter-controls">
+            <div class="filter-checkbox">
+                <input type="checkbox" id="showUserMessages" checked onchange="filterLogs()">
+                <label for="showUserMessages">用户提问</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="showAIResponses" checked onchange="filterLogs()">
+                <label for="showAIResponses">AI回复</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="showAdminActions" checked onchange="filterLogs()">
+                <label for="showAdminActions">管理操作</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="groupConversations" checked onchange="filterLogs()">
+                <label for="groupConversations">对话分组</label>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="test-btn" onclick="testLogRecording()">测试日志记录</button>
+            <button class="refresh-btn" onclick="loadLogs()">刷新日志</button>
+            <button class="clear-btn" onclick="clearLogs()">清空日志</button>
+        </div>
+        
+        <div id="logContent" class="log-content">
+            <!-- 日志内容将在这里动态加载 -->
+        </div>
+    </div>
+
+    <script>
+        // 初始化
+        document.getElementById('dateSelector').valueAsDate = new Date();
+
+        // 全局变量存储日志数据
+        let logData = [];
+
+        async function loadLogs() {
+            const date = document.getElementById('dateSelector').value;
+            const ipFilter = document.getElementById('ipSelector').value;
+            const token = localStorage.getItem('adminToken');
+            
+            try {
+                const response = await fetch(`/api/logs?date=${date}${ipFilter ? `&ip=${ipFilter}` : ''}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    // 未授权，返回登录页
+                    window.location.href = '/admin';
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // 更新IP选择器
+                    updateIpSelector(data.ip_addresses, ipFilter);
+                    
+                    // 存储日志数据
+                    logData = data.logs.split('\n').filter(line => line.trim());
+                    
+                    // 显示日志
+                    filterLogs();
+                } else {
+                    alert('加载日志失败：' + data.error);
+                }
+            } catch (error) {
+                alert('加载日志时发生错误：' + error);
+            }
+        }
+
+        // 根据过滤条件显示日志
+        function filterLogs() {
+            const showUserMessages = document.getElementById('showUserMessages').checked;
+            const showAIResponses = document.getElementById('showAIResponses').checked;
+            const showAdminActions = document.getElementById('showAdminActions').checked;
+            const groupConversations = document.getElementById('groupConversations').checked;
+            
+            const logContent = document.getElementById('logContent');
+            logContent.innerHTML = '';
+            
+            logData.forEach(line => {
+                if (!line.trim()) return;
+                
+                const isConversation = line.includes(' | 对话 | ');
+                const isError = line.includes(' | 错误 | ');
+                const isAdminAction = !isConversation && !isError && line.includes(' | 操作: ');
+                
+                // 根据过滤条件跳过不需要显示的日志
+                if ((isConversation && (!showUserMessages || !showAIResponses)) || 
+                    (isAdminAction && !showAdminActions)) {
+                    return;
+                }
+                
+                // 格式化日志行
+                const formattedLine = formatLogLine(line);
+                logContent.appendChild(formattedLine);
+            });
+        }
+
+        // 格式化单行日志
+        function formatLogLine(line) {
+            // 提取时间戳
+            const timestampMatch = line.match(/\[(.*?)\]/);
+            const timestamp = timestampMatch ? timestampMatch[1] : '';
+            
+            // 提取IP地址
+            const ipMatch = line.match(/IP: (.*?) \|/);
+            const ip = ipMatch ? ipMatch[1] : '';
+            
+            // 创建带格式的日志条目
+            let formattedLine = line;
+            if (timestamp) {
+                formattedLine = formattedLine.replace(`[${timestamp}]`, `<span class="timestamp">[${timestamp}]</span>`);
+            }
+            if (ip) {
+                formattedLine = formattedLine.replace(`IP: ${ip}`, `IP: <span class="ip-address">${ip}</span>`);
+            }
+            
+            // 根据内容类型设置不同的样式
+            let className = 'log-entry';
+            
+            if (line.includes(' | 对话 | ')) {
+                className += ' conversation';
+                
+                // 高亮用户提问和AI回答部分
+                if (line.includes('用户:')) {
+                    formattedLine = formattedLine.replace(/用户: (.*?) \|/, '用户: <span class="user-message">$1</span> |');
+                }
+                if (line.includes('AI:')) {
+                    formattedLine = formattedLine.replace(/AI: (.*)/, 'AI: <span class="assistant-message">$1</span>');
+                }
+            } else if (line.includes(' | 错误 | ')) {
+                className += ' error';
+                formattedLine = formattedLine.replace(/错误: (.*)/, '错误: <span class="status-fail">$1</span>');
+            } else if (line.includes(' | 操作: ')) {
+                className += ' admin-action';
+                
+                // 提取操作类型
+                const operationMatch = line.match(/操作: (.*?) \|/);
+                const operation = operationMatch ? operationMatch[1] : '';
+                if (operation) {
+                    formattedLine = formattedLine.replace(`操作: ${operation}`, `操作: <span class="operation">${operation}</span>`);
+                }
+                
+                // 添加状态样式
+                if (line.includes('状态: 成功')) {
+                    formattedLine = formattedLine.replace('状态: 成功', '状态: <span class="status status-success">成功</span>');
+                } else if (line.includes('状态: 失败')) {
+                    formattedLine = formattedLine.replace('状态: 失败', '状态: <span class="status status-fail">失败</span>');
+                }
+            }
+            
+            const div = document.createElement('div');
+            div.className = className;
+            div.innerHTML = formattedLine;
+            return div;
+        }
+
+        // 退出登录
+        async function logout() {
+            const token = localStorage.getItem('adminToken');
+            try {
+                await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                localStorage.removeItem('adminToken');
+                window.location.href = '/admin';
+            } catch (error) {
+                alert('退出失败，请稍后重试');
+            }
+        }
+
+        // 更新IP选择器
+        function updateIpSelector(ipAddresses, currentSelection) {
+            const ipSelector = document.getElementById('ipSelector');
+            const currentOptions = Array.from(ipSelector.options).map(opt => opt.value);
+            
+            // 保留"全部"选项
+            if (ipSelector.options.length <= 1) {
+                // 如果是首次加载，添加所有IP
+                ipAddresses.forEach(ip => {
+                    const option = document.createElement('option');
+                    option.value = ip;
+                    option.textContent = ip;
+                    ipSelector.appendChild(option);
+                });
+            } else {
+                // 更新IP列表，保留当前选择
+                // 移除不在新列表中的IP
+                for (let i = ipSelector.options.length - 1; i >= 1; i--) {
+                    const optionValue = ipSelector.options[i].value;
+                    if (!ipAddresses.includes(optionValue)) {
+                        ipSelector.remove(i);
+                    }
+                }
+                
+                // 添加新的IP
+                ipAddresses.forEach(ip => {
+                    if (!currentOptions.includes(ip)) {
+                        const option = document.createElement('option');
+                        option.value = ip;
+                        option.textContent = ip;
+                        ipSelector.appendChild(option);
+                    }
+                });
+            }
+            
+            // 设置当前选择
+            if (currentSelection && ipAddresses.includes(currentSelection)) {
+                ipSelector.value = currentSelection;
+            }
+        }
+
+        // 测试日志记录功能
+        async function testLogRecording() {
+            const token = localStorage.getItem('adminToken');
+            try {
+                const response = await fetch('/api/test-log', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    window.location.href = '/admin';
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('测试日志已记录，正在刷新日志显示...');
+                    loadLogs();  // 刷新日志显示
+                } else {
+                    alert('测试失败：' + data.error);
+                }
+            } catch (error) {
+                alert('测试过程中发生错误：' + error);
+            }
+        }
+
+        // 清空日志功能
+        async function clearLogs() {
+            if (!confirm('确定要清空当前日期的日志吗？此操作不可恢复！')) {
+                return;
+            }
+            
+            const date = document.getElementById('dateSelector').value;
+            const token = localStorage.getItem('adminToken');
+            
+            try {
+                const response = await fetch('/api/logs/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ date })
+                });
+                
+                if (response.status === 401) {
+                    window.location.href = '/admin';
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    loadLogs();  // 刷新日志显示
+                } else {
+                    alert('清空日志失败：' + (data.message || data.error));
+                }
+            } catch (error) {
+                alert('清空日志时发生错误：' + error);
+            }
+        }
+
+        // 页面加载时自动加载今天的日志
+        loadLogs();
+    </script>
+</body>
+</html> 
